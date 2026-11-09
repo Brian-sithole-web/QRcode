@@ -15,8 +15,8 @@ namespace QR_code
 {
     public partial class Form1 : Form
     {
-        private const double LogoWidthRatio = 0.20;
-        private const double LogoPaddingRatio = 0.12;
+        private const double LogoWidthRatio = 0.30;
+        private const double CircleMarginRatio = 0.05;
 
         private Image uploadedLogo;
 
@@ -98,8 +98,8 @@ namespace QR_code
         {
             Bitmap result = new Bitmap(qrCodeImage.Width, qrCodeImage.Height);
             int logoSize = Math.Max(1, (int)Math.Round(qrCodeImage.Width * LogoWidthRatio));
-            int padding = Math.Max(4, (int)Math.Round(logoSize * LogoPaddingRatio));
-            int plateSize = logoSize + (padding * 2);
+            int margin = Math.Max(2, (int)Math.Round(logoSize * CircleMarginRatio));
+            int plateSize = logoSize + (margin * 2);
             int plateX = (qrCodeImage.Width - plateSize) / 2;
             int plateY = (qrCodeImage.Height - plateSize) / 2;
             Rectangle plate = new Rectangle(plateX, plateY, plateSize, plateSize);
@@ -112,9 +112,9 @@ namespace QR_code
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 graphics.DrawImage(qrCodeImage, 0, 0, qrCodeImage.Width, qrCodeImage.Height);
 
-                using (SolidBrush whiteBrush = new SolidBrush(Color.White))
+                using (SolidBrush plateBrush = new SolidBrush(Color.Black))
                 {
-                    graphics.FillEllipse(whiteBrush, plate);
+                    graphics.FillEllipse(plateBrush, plate);
                 }
 
                 graphics.DrawImage(logo, logoBounds);
